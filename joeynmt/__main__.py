@@ -1,8 +1,10 @@
 import argparse
 
+import time
 from joeynmt.training import train
 from joeynmt.prediction import test
 from joeynmt.prediction import translate
+from joeynmt.custom_callback import custom_callback_train_end
 
 
 def main():
@@ -25,6 +27,8 @@ def main():
 
     args = ap.parse_args()
 
+    start_time = int(time.time())
+
     if args.mode == "train":
         train(cfg_file=args.config_path)
     elif args.mode == "test":
@@ -35,7 +39,9 @@ def main():
                   output_path=args.output_path)
     else:
         raise ValueError("Unknown mode")
-
+    
+    end_time = int(time.time())
+    custom_callback_train_end(start_time, end_time)
 
 if __name__ == "__main__":
     main()

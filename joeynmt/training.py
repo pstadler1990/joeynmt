@@ -42,6 +42,9 @@ except ImportError as no_apex:
     # error handling in TrainManager object construction
     pass
 
+# XXX: Modified pstadler for automatic custom callback
+from joeynmt.custom_callback import custom_callback_epoch
+
 logger = logging.getLogger(__name__)
 
 
@@ -202,7 +205,7 @@ class TrainManager:
         if self.n_gpu > 1:
             self.model = _DataParallel(self.model)
 
-    def _save_checkpoint(self) -> None:
+    def _save_checkpoint(self) -> str:
         """
         Save the model's current parameters and the training state to a
         checkpoint.
@@ -246,6 +249,7 @@ class TrainManager:
         except OSError:
             # overwrite best.ckpt
             torch.save(state, best_path)
+        return best_path
 
     def init_from_checkpoint(self, path: str,
                              reset_best_ckpt: bool = False,
@@ -540,7 +544,9 @@ class TrainManager:
             if self.ckpt_queue.maxsize > 0:
                 logger.info("Saving new checkpoint.")
                 new_best = True
-                self._save_checkpoint()
+                ckpt_path = self._save_checkpoint()
+                # XXX: Modified pstadler for automatic custom callback
+                custom_callback_epoch(new_best, ckpt_path)
 
         if self.scheduler is not None \
                 and self.scheduler_step_at == "validation":
@@ -760,3 +766,4 @@ if __name__ == "__main__":
                         help="Training configuration file (yaml).")
     args = parser.parse_args()
     train(cfg_file=args.config)
+
