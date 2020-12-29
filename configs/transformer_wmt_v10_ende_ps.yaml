@@ -3,9 +3,9 @@ name: "transformer"
 data:
     src: "en"
     trg: "de"
-    train: "corpus_training_data/en-de/final.train"
-    dev:   "corpus_training_data/en-de/final.dev"
-    test:  "corpus_training_data/en-de/final.test"
+    train: "../corpus_training_data/en-de/final.train"
+    dev:   "../corpus_training_data/en-de/final.dev"
+    test:  "../corpus_training_data/en-de/final.test"
     level: "bpe"
     lowercase: False
     max_sent_length: 100
