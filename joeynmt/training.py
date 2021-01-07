@@ -42,9 +42,6 @@ except ImportError as no_apex:
     # error handling in TrainManager object construction
     pass
 
-# XXX: Modified pstadler for automatic custom callback
-from joeynmt.custom_callback import custom_callback_epoch
-
 logger = logging.getLogger(__name__)
 
 
@@ -545,8 +542,6 @@ class TrainManager:
                 logger.info("Saving new checkpoint.")
                 new_best = True
                 ckpt_path = self._save_checkpoint()
-                # XXX: Modified pstadler for automatic custom callback
-                custom_callback_epoch(new_best, ckpt_path)
 
         if self.scheduler is not None \
                 and self.scheduler_step_at == "validation":

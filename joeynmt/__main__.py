@@ -4,7 +4,6 @@ import time
 from joeynmt.training import train
 from joeynmt.prediction import test
 from joeynmt.prediction import translate
-from joeynmt.custom_callback import custom_callback_train_end
 
 
 def main():
@@ -41,7 +40,7 @@ def main():
         raise ValueError("Unknown mode")
     
     end_time = int(time.time())
-    custom_callback_train_end(start_time, end_time)
+    print('training time, start: {s}, end: {e}'.format(s=start_time, e=end_time))
 
 if __name__ == "__main__":
     main()
