@@ -43,7 +43,7 @@ training:
     model_dir: "models/wmt_v10_ps_ende_transformer"
     overwrite: False
     shuffle: True
-    use_cuda: True
+    use_cuda: False # true TODO: Enable this when using correct PC!
     max_output_length: 100
     print_valid_sents: [0, 1, 2, 3]
     keep_last_ckpts: 3
